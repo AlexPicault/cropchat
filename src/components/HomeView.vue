@@ -3,7 +3,7 @@
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--3-col mdl-cell mdl-cell--1-col-tablet mdl-cell--hide-phone"></div>
       <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone">
-        <div v-for="picture in this.pictures" class="image-card" @click="displayDetails(picture.id)">
+        <div v-for="(picture, key) in this.pictures" class="image-card" @click="displayDetails(key)">
           <div class="image-card__picture">
             <img :src="picture.url" />
           </div>
@@ -20,16 +20,24 @@
 </template>
 
 <script>
-  import data from '../data'
+  
   export default {
-    methods: {
-      displayDetails (id) {
-        this.$router.push({name: 'detail', params: { id: id }})
-      }
+    mounted () {
+      this.$http.get('https://cropcat-28625.firebaseio.com/cats.json')
+        .then(response => {
+          this.pictures = response.data
+        }
+        )
     },
     data () {
       return {
-        'pictures': data.pictures
+        pictures: []
+      }
+    },
+    methods: {
+      displayDetails (key) {
+        console.log(key)
+        this.$router.push({name: 'detail', params: {id: key}})
       }
     }
   }

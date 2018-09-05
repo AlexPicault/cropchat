@@ -44,7 +44,7 @@ export default {
         info: 'Posted by Charles on Tuesday',
         created_at: -1 * new Date().getTime()
       }
-      this.$http.post('https://cropcat-28625.firebaseio.com//cats.json', cat).then(
+      this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(
         response => {
           this.$router.push('/')
         },

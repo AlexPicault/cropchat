@@ -14,7 +14,7 @@ export default new Router({
       component: HomeView
     },
     {
-      path: '/datail/id',
+      path: '/detail/:id',
       name: 'detail',
       component: DetailView
     },

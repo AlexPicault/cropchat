@@ -46,7 +46,7 @@ export default {
       }
       this.$http.post('https://cropcat-28625.firebaseio.com//cats.json', cat).then(
         response => {
-          console.log(response)
+          this.$router.push('/')
         },
         error => {
           console.log(error)

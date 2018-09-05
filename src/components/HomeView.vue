@@ -20,54 +20,69 @@
 </template>
 
 <script>
-  
-  export default {
-    mounted () {
-      this.$http.get('https://cropcat-28625.firebaseio.com/cats.json')
+export default {
+  mounted () {
+    this.getCats()
+    this.saveCatsToCache()
+  },
+  data () {
+    return {
+      pictures: []
+    }
+  },
+  methods: {
+    displayDetails (key) {
+      console.log(key)
+      this.$router.push({ name: 'detail', params: { id: key } })
+    },
+    getCats () {
+      if (navigator.onLine) {
+        this.saveCatsToCache()
+        this.$http
+          .get('https://cropcat-28625.firebaseio.com/cats.json')
+          .then(response => {
+            this.pictures = response.data
+          })
+      } else {
+        this.pictures = JSON.parse(localStorage.getItem('cats'))
+      }
+    },
+    saveCatsToCache () {
+      this.$http
+        .get('https://cropcat-28625.firebaseio.com/cats.json')
         .then(response => {
-          this.pictures = response.data
-        }
-        )
-    },
-    data () {
-      return {
-        pictures: []
-      }
-    },
-    methods: {
-      displayDetails (key) {
-        console.log(key)
-        this.$router.push({name: 'detail', params: {id: key}})
-      }
+          localStorage.setItem('cats', JSON.stringify(response.data))
+        })
     }
   }
+}
 </script>
 
 <style scoped>
-  .add-picture-button {
-    position: fixed;
-    right: 24px;
-    bottom: 24px;
-    z-index: 998;
-  }
-  .image-card {
-    position: relative;
-    margin-bottom: 8px;
-  }
-  .image-card__picture > img {
-    width:100%;
-  }
-  .image-card__comment {
-    position: absolute;
-    bottom: 0;
-    height: 52px;
-    padding: 16px;
-    text-align: right;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  .image-card__comment > span {
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-  }
+.add-picture-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 998;
+}
+.image-card {
+  position: relative;
+  margin-bottom: 8px;
+}
+.image-card__picture > img {
+  width: 100%;
+}
+.image-card__comment {
+  position: absolute;
+  bottom: 0;
+  height: 52px;
+  padding: 16px;
+  text-align: right;
+  background: rgba(0, 0, 0, 0.5);
+}
+.image-card__comment > span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
 </style>

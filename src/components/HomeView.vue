@@ -19,6 +19,9 @@
     <router-link class="take-picture-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored" to="/camera">
       <i class="material-icons">camera_alt</i>
     </router-link>
+     <router-link class="file-picture-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored" to="/file">
+      <i class="material-icons">create_new_folder</i>
+    </router-link>
   </div>
 </template>
 
@@ -68,6 +71,18 @@ export default {
   bottom: 24px;
   z-index: 998;
 }
+.take-picture-button {
+    position: fixed;
+    right: 24px;
+    bottom: 90px;
+    z-index: 5;
+  }
+   .file-picture-button {
+    position: fixed;
+    right: 24px;
+    bottom: 160px;
+    z-index: 5;
+  }
 .image-card {
   position: relative;
   margin-bottom: 8px;
@@ -88,10 +103,4 @@ export default {
   font-size: 14px;
   font-weight: bold;
 }
- .take-picture-button {
-    position: fixed;
-    right: 24px;
-    bottom: 90px;
-    z-index: 5;
-  }
 </style>

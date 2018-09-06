@@ -32,7 +32,6 @@ export default {
     this.$http.get('https://cropcat-28625.firebaseio.com/cats.json')
       .then(response => {
         for (var id in response.data) {
-          console.log(id)
           if (id === this.$route.params.id) {
             this.cat = response.data[id]
           }

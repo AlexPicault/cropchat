@@ -10,17 +10,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
-var config = {
-  apiKey: 'AIzaSyDQGHt32HeQRxWuCxWgGV11NodMOib2LaE',
-  authDomain: 'cropcat-28625.firebaseapp.com',
-  databaseURL: 'https://cropcat-28625.firebaseio.com',
-  storageBucket: 'cropcat-28625.appspot.com',
-  messagingSenderId: '505217482394'
-}
-firebase.initializeApp(config)
-const storage = firebase.storage()
+import {storage} from '../services/firebase'
 
 export default {
   data () {
@@ -44,13 +34,12 @@ export default {
   },
   methods: {
     capture () {
-      console.log(storage)
       const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
       const imageCapture = new window.ImageCapture(mediaStreamTrack)
       return imageCapture.takePhoto().then(blob => {
-        storage.ref().child(`images/picture-${new Date().getTime()}`).put(blob)
+        storage.child(`images/picture-${new Date().getTime()}`).put(blob)
           .then(res => {
-            let starsRef = storage.ref().child(res.metadata.fullPath)
+            let starsRef = storage.child(res.metadata.fullPath)
             starsRef.getDownloadURL().then(res => {
               const cat = {
                 url: res,
@@ -61,6 +50,7 @@ export default {
               this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(
                 response => {
                   console.log('ok')
+                  this.$router.go(-1)
                 },
                 error => {
                   console.log(error)
@@ -68,7 +58,6 @@ export default {
               )
             })
           })
-        this.$router.go(-1)
       })
     }
   }

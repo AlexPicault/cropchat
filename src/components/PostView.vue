@@ -22,8 +22,10 @@
 </template>
 
 <script>
+import {postImg} from '../mixins/postImg'
 
 export default {
+  mixins: [postImg],
   data () {
     return {
       catUrl: null,
@@ -38,20 +40,7 @@ export default {
   },
   methods: {
     postCat () {
-      const cat = {
-        url: this.catUrl,
-        comment: this.title,
-        info: 'Posted by Charles on Tuesday',
-        created_at: -1 * new Date().getTime()
-      }
-      this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(
-        response => {
-          this.$router.push('/')
-        },
-        error => {
-          console.log(error)
-        }
-      )
+      this.postImg(this.catUrl, this.title)
     }
   }
 }

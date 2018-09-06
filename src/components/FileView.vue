@@ -22,17 +22,17 @@
 
 <script>
 import {storage} from '../services/firebase'
+import {postImg} from '../mixins/postImg'
+
 export default {
+  mixins: [postImg],
   methods: {
     onChange () {
-      console.log('gggg')
       var preview = document.querySelector('img')
       var file = document.querySelector('input[type=file]').files[0]
       var reader = new FileReader()
-      console.log(reader)
 
       reader.onloadend = function () {
-        console.log('ttttt')
         preview.src = reader.result
       }
 
@@ -50,18 +50,7 @@ export default {
         storage.child(`images/picture-${new Date().getTime()}`).put(file).then(res => {
           let starsRef = storage.child(res.metadata.fullPath)
           starsRef.getDownloadURL().then(res => {
-            const cat = {
-              url: res,
-              comment: 'ma photo',
-              info: 'Posted by Charles on Tuesday',
-              created_at: -1 * new Date().getTime()
-            }
-            this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(res => {
-              this.$router.go(-1)
-            },
-            error => {
-              console.log(error)
-            })
+            this.postImg(res, 'ma photo')
           })
         })
       } else {

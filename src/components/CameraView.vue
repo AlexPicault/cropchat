@@ -11,8 +11,10 @@
 
 <script>
 import {storage} from '../services/firebase'
+import {postImg} from '../mixins/postImg'
 
 export default {
+  mixins: [postImg],
   data () {
     return {
       mediaStream: null
@@ -41,21 +43,7 @@ export default {
           .then(res => {
             let starsRef = storage.child(res.metadata.fullPath)
             starsRef.getDownloadURL().then(res => {
-              const cat = {
-                url: res,
-                comment: 'ma photo',
-                info: 'Posted by Charles on Tuesday',
-                created_at: -1 * new Date().getTime()
-              }
-              this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(
-                response => {
-                  console.log('ok')
-                  this.$router.go(-1)
-                },
-                error => {
-                  console.log(error)
-                }
-              )
+              this.postImg(res, 'ma photo')
             })
           })
       })

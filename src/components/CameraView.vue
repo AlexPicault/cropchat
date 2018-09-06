@@ -1,19 +1,58 @@
 <template>
     <div class="camera-modal">
         <video ref="video" class="camera-stream"/>
+        <div class="camera-modal-container">
+            <span @click="capture" class="take-picture-button take-picture-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+              <i class="material-icons">camera</i>
+            </span>
+        </div>
     </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+
+var config = {
+  apiKey: 'AIzaSyDQGHt32HeQRxWuCxWgGV11NodMOib2LaE',
+  authDomain: 'cropcat-28625.firebaseapp.com',
+  databaseURL: 'https://cropcat-28625.firebaseio.com',
+  storageBucket: 'cropcat-28625.appspot.com',
+  messagingSenderId: '505217482394'
+}
+firebase.initializeApp(config)
+const storage = firebase.storage()
+
 export default {
+  data () {
+    return {
+      mediaStream: null
+    }
+  },
   mounted () {
     navigator.mediaDevices
       .getUserMedia({video: 'true'})
       .then(mediaStream => {
+        this.mediaStream = mediaStream
         this.$refs.video.srcObject = mediaStream
         this.$refs.video.play()
       })
       .catch(error => console.error('getUserMedia() error:', error))
+  },
+  destroyed () {
+    const tracks = this.mediaStream.getTracks()
+    tracks.map(track => track.stop())
+  },
+  methods: {
+    capture () {
+      console.log(storage)
+      const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
+      const imageCapture = new window.ImageCapture(mediaStreamTrack)
+      return imageCapture.takePhoto().then(blob => {
+        console.log(blob)
+        storage.ref().child(`images/picture-${new Date().getTime()}`).put(blob).then(res => { console.log(res) })
+        this.$router.go(-1)
+      })
+    }
   }
 }
 </script>
@@ -32,5 +71,15 @@ export default {
   width: 100%;
   max-height: 100%;
 }
+ .camera-modal-container {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+    .take-picture-button {
+        display: flex;
+    }
 </style>
 view rawCameraView.vue hosted with ❤ by GitHub

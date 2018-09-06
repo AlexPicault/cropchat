@@ -30,7 +30,7 @@ export default {
   },
   mounted () {
     navigator.mediaDevices
-      .getUserMedia({video: 'true'})
+      .getUserMedia({ video: 'true' })
       .then(mediaStream => {
         this.mediaStream = mediaStream
         this.$refs.video.srcObject = mediaStream
@@ -48,8 +48,26 @@ export default {
       const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
       const imageCapture = new window.ImageCapture(mediaStreamTrack)
       return imageCapture.takePhoto().then(blob => {
-        console.log(blob)
-        storage.ref().child(`images/picture-${new Date().getTime()}`).put(blob).then(res => { console.log(res) })
+        storage.ref().child(`images/picture-${new Date().getTime()}`).put(blob)
+          .then(res => {
+            let starsRef = storage.ref().child(res.metadata.fullPath)
+            starsRef.getDownloadURL().then(res => {
+              const cat = {
+                url: res,
+                comment: 'ma photo',
+                info: 'Posted by Charles on Tuesday',
+                created_at: -1 * new Date().getTime()
+              }
+              this.$http.post('https://cropcat-28625.firebaseio.com/cats.json', cat).then(
+                response => {
+                  console.log('ok')
+                },
+                error => {
+                  console.log(error)
+                }
+              )
+            })
+          })
         this.$router.go(-1)
       })
     }
@@ -71,15 +89,15 @@ export default {
   width: 100%;
   max-height: 100%;
 }
- .camera-modal-container {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-    .take-picture-button {
-        display: flex;
-    }
+.camera-modal-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.take-picture-button {
+  display: flex;
+}
 </style>
 view rawCameraView.vue hosted with ❤ by GitHub

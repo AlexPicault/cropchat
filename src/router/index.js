@@ -5,6 +5,8 @@ import DetailView from '@/components/DetailView'
 import PostView from '@/components/PostView'
 import CameraView from '@/components/CameraView'
 import FileView from '@/components/FileView'
+import SignIn from '@/components/auth/SignIn'
+import SignUp from '@/components/auth/SignUp'
 
 Vue.use(Router)
 
@@ -14,6 +16,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: SignIn
+    },
+    {
+      path: '/signUp',
+      name: 'signUp',
+      component: SignUp
     },
     {
       path: '/detail/:id',

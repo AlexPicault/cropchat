@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {storage} from '../services/firebase'
+import {fire} from '../services/firebase'
 import {postImg} from '../mixins/postImg'
 
 export default {
@@ -47,8 +47,8 @@ export default {
       var reader = new FileReader()
       if (file) {
         reader.readAsDataURL(file)
-        storage.child(`images/picture-${new Date().getTime()}`).put(file).then(res => {
-          let starsRef = storage.child(res.metadata.fullPath)
+        fire.storage().ref().child(`images/picture-${new Date().getTime()}`).put(file).then(res => {
+          let starsRef = fire.storage().ref().child(res.metadata.fullPath)
           starsRef.getDownloadURL().then(res => {
             this.postImg(res, 'ma photo')
           })

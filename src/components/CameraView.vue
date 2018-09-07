@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {storage} from '../services/firebase'
+import {fire} from '../services/firebase'
 import {postImg} from '../mixins/postImg'
 
 export default {
@@ -39,9 +39,9 @@ export default {
       const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
       const imageCapture = new window.ImageCapture(mediaStreamTrack)
       return imageCapture.takePhoto().then(blob => {
-        storage.child(`images/picture-${new Date().getTime()}`).put(blob)
+        fire.storage().ref().child(`images/picture-${new Date().getTime()}`).put(blob)
           .then(res => {
-            let starsRef = storage.child(res.metadata.fullPath)
+            let starsRef = fire.storage().ref().child(res.metadata.fullPath)
             starsRef.getDownloadURL().then(res => {
               this.postImg(res, 'ma photo')
             })

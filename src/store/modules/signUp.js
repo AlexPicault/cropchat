@@ -1,5 +1,5 @@
 const state = {
-  user: 'dd'
+  user: null
 }
 
 const mutations = {
@@ -17,7 +17,6 @@ const actions = {
 
 const getters = {
   user (state) {
-    console.log('yyyyy')
     return state.user
   }
 }

@@ -7,9 +7,8 @@ var config = {
   storageBucket: 'cropcat-28625.appspot.com',
   messagingSenderId: '505217482394'
 }
-firebase.initializeApp(config)
-const storage = firebase.storage().ref()
+const fire = firebase.initializeApp(config)
 
 export {
-  storage
+  fire
 }

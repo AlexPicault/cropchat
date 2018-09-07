@@ -10,7 +10,6 @@
                   @blur="$v.email.$touch()"
                   v-model="email">
           <p v-if="!$v.email.email">Please provide a valid email address.</p>
-          <p v-if="!$v.email.required">This field must not be empty.</p>
         </div>
         <div class="input" :class="{invalid: $v.pseudo.$error}">
           <label for="pseudo">Your Pseudo</label>
@@ -19,7 +18,7 @@
                   id="pseudo"
                   @blur="$v.pseudo.$touch()"
                   v-model="pseudo">
-          <p v-if="!$v.pseudo.minVal">You have to be at least {{ $v.pseudo.$params.minVal.min }} years old.</p>
+          <p v-if="!$v.pseudo.required">You pseudo have to be at least {{ $v.pseudo.$params.minLength.min }} caracters.</p>
         </div>
         <div class="input" :class="{invalid: $v.password.$error}">
           <label for="password">Password</label>
@@ -41,13 +40,12 @@
           <button type="submit" :disabled="$v.$invalid">Submit</button>
         </div>
       </form>
-      <a @click="storeUser">dczdcze</a>
     </div>
   </div>
 </template>
 
 <script>
-  import { required, email, numeric, minValue, minLength, sameAs } from 'vuelidate/lib/validators'
+  import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
   import {mapActions} from 'vuex'
 
   export default {
@@ -66,8 +64,7 @@
       },
       pseudo: {
         required,
-        numeric,
-        minVal: minValue(18)
+        minLength: minLength(3)
       },
       password: {
         required,
@@ -84,14 +81,11 @@
         storeUser: 'storeUser'
       }),
       onSubmit () {
-        const formData = {
+        const user = {
           email: this.email,
-          pseudo: this.pseudo,
-          password: this.password,
-          confirmPassword: this.confirmPassword
+          password: this.password
         }
-        console.log(formData)
-        this.$store.dispatch('signup', formData)
+        this.storeUser(user)
       }
     }
   }

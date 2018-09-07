@@ -1,3 +1,5 @@
+import {fire} from '../../services/firebase'
+
 const state = {
   user: null
 }
@@ -10,7 +12,12 @@ const mutations = {
 }
 
 const actions = {
-  storeUser: ({commit}) => {
+  storeUser: ({commit}, user) => {
+    fire.auth().createUserWithEmailAndPassword(user.email, user.password).then(res => {
+      this.$router.push('/')
+    }).catch(err => {
+      console.log(err)
+    })
     commit('storeUser')
   }
 }

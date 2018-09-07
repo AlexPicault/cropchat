@@ -2,7 +2,7 @@
   <div>
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--3-col mdl-cell mdl-cell--1-col-tablet mdl-cell--hide-phone"></div>
-      <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone home">
         <div v-for="(picture, key) in this.pictures" class="image-card" @click="displayDetails(key)">
           <div class="image-card__picture">
             <img :src="picture.url" />
@@ -65,6 +65,9 @@ export default {
 </script>
 
 <style scoped>
+.home{
+  margin-top: 15%
+}
 .add-picture-button {
   position: fixed;
   right: 24px;

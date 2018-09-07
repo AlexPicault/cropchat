@@ -3,8 +3,8 @@
     <header class="mdl-layout__header">
       <div class="mdl-tabs__tab-bar">
       <router-link class="link mdl-tabs__tab mdl-layout-title is-active" to="/">CropChat</router-link>
-      <router-link class="link mdl-tabs__tab mdl-layout-title" to="/signup">Sign Up</router-link>
-      <router-link class="link mdl-tabs__tab mdl-layout-title" to="/signup">Sign Up</router-link>
+      <router-link class="link mdl-tabs__tab mdl-layout-title" to="/signIn">SignIn</router-link>
+      <router-link class="link mdl-tabs__tab mdl-layout-title" to="/signUp">SignUp</router-link>
       <a class="back mdl-tabs__tab"><i class="material-icons" @click="getBack">arrow_back</i></a>
   </div>
     </header>

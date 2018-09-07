@@ -5,7 +5,15 @@ import App from './App'
 import router from './router'
 import Vuefire from 'vuefire'
 import VueResource from 'vue-resource'
+import BootstrapVue from 'bootstrap-vue'
+import Vuelidate from 'vuelidate'
+import store from './store/store'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(Vuelidate)
 Vue.use(Vuefire)
 Vue.use(VueResource)
 Vue.http.options.root = 'https://vuejs-http.firebaseio.com/'
@@ -22,6 +30,7 @@ Vue.http.interceptors.push((request, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

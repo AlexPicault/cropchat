@@ -1,5 +1,5 @@
 <template>
-  <div id="signin">
+    <div id="signin">
     <div class="signin-form">
       <form @submit.prevent="onSubmit">
         <div class="input">
@@ -74,13 +74,13 @@
 
   .input input:focus {
     outline: none;
-    border: 1px solid #521751;
+    border: 1px solid #3b56cf;
     background-color: #eee;
   }
 
   .submit button {
-    border: 1px solid #521751;
-    color: #521751;
+    border: 1px solid #3b56cf;
+    color: #3b56cf;
     padding: 10px 20px;
     font: inherit;
     cursor: pointer;
@@ -88,7 +88,7 @@
 
   .submit button:hover,
   .submit button:active {
-    background-color: #521751;
+    background-color: #3b56cf;
     color: white;
   }
 

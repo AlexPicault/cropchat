@@ -40,8 +40,8 @@
         <div class="submit">
           <button type="submit" :disabled="$v.$invalid">Submit</button>
         </div>
-        <a @click="storeUser">dczdcz</a>
       </form>
+      <a @click="storeUser">dczdcze</a>
     </div>
   </div>
 </template>

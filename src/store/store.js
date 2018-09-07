@@ -6,5 +6,7 @@ import * as signUp from './modules/signUp'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  signUp
+  modules: {
+    signUp
+  }
 })

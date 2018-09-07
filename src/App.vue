@@ -2,8 +2,10 @@
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <router-link class="mdl-layout-title" to="/">CropChat</router-link>
-        <i class="material-icons back" @click="getBack">arrow_back</i>
+        <router-link class="mdl-layout-title" to=" /">CropChat</router-link>
+        <router-link to="/signup">Sign Up</router-link>
+        <router-link to="/signup">Sign Up</router-link>
+        <i class="material-icons" @click="getBack">arrow_back</i>
       </div>
     </header>
     <div class="mdl-layout__drawer">

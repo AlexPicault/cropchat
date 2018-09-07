@@ -83,9 +83,17 @@
       onSubmit () {
         const user = {
           email: this.email,
+          pseudo: this.pseudo,
           password: this.password
         }
         this.storeUser(user)
+        this.$http.post('https://cropcat-28625.firebaseio.com/users.json', user).then(
+          response => {
+            this.$router.push('/')
+          },
+          error => {
+            console.log(error)
+          })
       }
     }
   }

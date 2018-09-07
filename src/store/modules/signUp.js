@@ -13,8 +13,8 @@ const mutations = {
 
 const actions = {
   storeUser: ({commit}, user) => {
+    console.log(this.$http)
     fire.auth().createUserWithEmailAndPassword(user.email, user.password).then(res => {
-      this.$router.push('/')
     }).catch(err => {
       console.log(err)
     })

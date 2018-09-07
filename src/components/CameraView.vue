@@ -12,6 +12,7 @@
 <script>
 import {fire} from '../services/firebase'
 import {postImg} from '../mixins/postImg'
+import {mapGetters} from 'vuex'
 
 export default {
   mixins: [postImg],
@@ -19,6 +20,11 @@ export default {
     return {
       mediaStream: null
     }
+  },
+  computed: {
+    ...mapGetters({
+      pseudo: 'pseudo'
+    })
   },
   mounted () {
     navigator.mediaDevices
@@ -43,7 +49,7 @@ export default {
           .then(res => {
             let starsRef = fire.storage().ref().child(res.metadata.fullPath)
             starsRef.getDownloadURL().then(res => {
-              this.postImg(res, 'ma photo')
+              this.postImg(res, 'ma photo', this.pseudo)
             })
           })
       })

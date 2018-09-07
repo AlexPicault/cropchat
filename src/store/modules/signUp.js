@@ -1,30 +1,28 @@
 import {fire} from '../../services/firebase'
 
 const state = {
-  user: null
+  pseudo: null
 }
 
 const mutations = {
-  storeUser (state, user) {
-    console.log('rrr')
-    state.user = user
+  storeUser (state, pseudo) {
+    state.pseudo = pseudo
   }
 }
 
 const actions = {
   storeUser: ({commit}, user) => {
-    console.log(this.$http)
     fire.auth().createUserWithEmailAndPassword(user.email, user.password).then(res => {
+      commit('storeUser', user.pseudo)
     }).catch(err => {
       console.log(err)
     })
-    commit('storeUser')
   }
 }
 
 const getters = {
-  user (state) {
-    return state.user
+  pseudo: state => {
+    return state.pseudo
   }
 }
 

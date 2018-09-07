@@ -53,6 +53,7 @@
       return {
         email: '',
         pseudo: '',
+        test: '',
         password: '',
         confirmPassword: ''
       }
@@ -87,13 +88,6 @@
           password: this.password
         }
         this.storeUser(user)
-        this.$http.post('https://cropcat-28625.firebaseio.com/users.json', user).then(
-          response => {
-            this.$router.push('/')
-          },
-          error => {
-            console.log(error)
-          })
       }
     }
   }

@@ -26,6 +26,7 @@
 
 <script>
 import {postImg} from '../mixins/postImg'
+import {mapGetters} from 'vuex'
 
 export default {
   mixins: [postImg],
@@ -35,6 +36,11 @@ export default {
       title: ''
     }
   },
+  computed: {
+    ...mapGetters({
+      pseudo: 'pseudo'
+    })
+  },
   mounted () {
     this.$http.get('https://api.thecatapi.com/v1/images/search?format=json')
       .then(response => {
@@ -43,7 +49,7 @@ export default {
   },
   methods: {
     postCat () {
-      this.postImg(this.catUrl, this.title)
+      this.postImg(this.catUrl, this.title, this.pseudo)
     },
     reload () {
       this.$http.get('https://api.thecatapi.com/v1/images/search?format=json')
